@@ -1,14 +1,44 @@
 {
-  "title": "Example of a build generated using multiple inputs",
+  "title": "Genomic epidemiology of novel coronavirus",
   "build_url": "https://github.com/nextstrain/ncov",
   "maintainers": [
-    {"name": "James Hadfield", "url": "https://bedford.io/people/jameshadfield"}
+    {"name": "the Nextstrain team", "url": "https://nextstrain.org/"}
   ],
   "colorings": [
     {
-      "key": "aus",
-      "title": "Source: Australia",
-      "type": "boolean"
+      "key": "subclade_membership",
+      "title": "Emerging Clade",
+      "type": "categorical"
+    },
+    {
+      "key": "pango_lineage",
+      "title": "PANGO Lineage",
+      "type": "categorical"
+    },
+    {
+      "key": "GISAID_clade",
+      "title": "GISAID Clade",
+      "type": "categorical"
+    },
+    {
+      "key": "S1_mutations",
+      "title": "S1 mutations",
+      "type": "continuous"
+    },
+    {
+      "key": "logistic_growth",
+      "title": "Logistic growth",
+      "type": "continuous"
+    },
+    {
+      "key": "current_frequency",
+      "title": "Current frequency",
+      "type": "continuous"
+    },
+    {
+      "key": "location",
+      "title": "Location",
+      "type": "categorical"
     },
     {
       "key": "division",
@@ -70,44 +100,57 @@
     },
     {
       "key": "country_exposure",
-      "title": "Country of exposure",
+      "title": "Country of Exposure",
       "type": "categorical"
     },
     {
       "key": "division_exposure",
-      "title": "Division of exposure",
+      "title": "Division of Exposure",
       "type": "categorical"
     },
     {
       "key": "region_exposure",
       "title": "Region of exposure",
       "type": "categorical"
+    },
+    {
+      "key": "logistic_growth",
+      "title": "Logistic growth",
+      "type": "continuous"
+    },
+    {
+      "key": "current_frequency",
+      "title": "Current frequency",
+      "type": "continuous"
     }
   ],
   "geo_resolutions": [
+    "location",
     "division",
     "country",
     "region"
   ],
   "display_defaults": {
-    "color_by": "aus",
+    "color_by": "country",
     "distance_measure": "num_date",
     "geo_resolution": "country",
-    "map_triplicate": false,
-    "branch_label": "none"
+    "map_triplicate": true,
+    "branch_label": "clade"
   },
   "filters": [
     "recency",
-    "aus",
-    "division",
-    "country",
+    "clade_membership",
     "region",
+    "country",
+    "division",
+    "location",
     "host",
     "author"
   ],
   "panels": [
     "tree",
     "map",
-    "entropy"
+    "entropy",
+    "frequencies"
   ]
 }
