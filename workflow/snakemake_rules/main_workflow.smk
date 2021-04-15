@@ -38,7 +38,8 @@ if "use_nextalign" in config and config["use_nextalign"]:
         params:
             outdir = "results/translations",
             genes = ','.join(config.get('genes', ['S'])),
-            basename = "seqs{origin}"
+            basename = "seqs{origin}",
+            file_reader = _get_file_reader_by_extension,
         log:
             "logs/align{origin}.txt"
         benchmark:
@@ -49,12 +50,12 @@ if "use_nextalign" in config and config["use_nextalign"]:
             mem_mb=3000
         shell:
             """
-            nextalign \
+            {params.file_reader} {input.sequences} | nextalign \
                 --jobs={threads} \
                 --reference {input.reference} \
                 --genemap {input.genemap} \
                 --genes {params.genes} \
-                --sequences {input.sequences} \
+                --sequences /dev/stdin \
                 --output-dir {params.outdir} \
                 --output-basename {params.basename} \
                 --output-fasta {output.alignment} \
@@ -78,14 +79,16 @@ else:
             "benchmarks/align{origin}.txt"
         threads: 16
         conda: config["conda_environment"]
+        params:
+            file_reader = _get_file_reader_by_extension,
         shell:
             """
-            mafft \
+            {params.file_reader} {input.sequences} | mafft \
                 --auto \
                 --thread {threads} \
                 --keeplength \
                 --addfragments \
-                {input.sequences} \
+                /dev/stdin \
                 {input.reference} > {output} 2> {log}
             """
 

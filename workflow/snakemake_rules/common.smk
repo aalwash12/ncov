@@ -177,3 +177,13 @@ def _get_first(config, *keys):
         if config.get(key) not in {"", None}:
             return config[key]
     raise KeyError(str(keys))
+
+
+def _get_file_reader_by_extension(wildcards, input):
+    import pathlib
+    sequence_path = pathlib.Path(input.sequences)
+
+    if sequence_path.suffix in (".gz", ".xz"):
+        return "gunzip -c -d"
+    else:
+        return "cat"
